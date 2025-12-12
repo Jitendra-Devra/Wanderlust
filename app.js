@@ -33,8 +33,13 @@ main()
     });
 
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(dbUrl, {
+        ssl: true,
+        tlsInsecure: false,
+        serverSelectionTimeoutMS: 10000,
+    });
 }
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
