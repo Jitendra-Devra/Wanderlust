@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV != "production") {
+if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
 
@@ -20,17 +20,10 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-// DB URL
+// --------------------------------------
+// DATABASE CONNECTION
+// --------------------------------------
 const dbUrl = process.env.ATLASDB_URL;
-
-// DB Connection
-main()
-    .then(() => {
-        console.log("connected to DB");
-    })
-    .catch((err) => {
-        console.log(err);
-    });
 
 async function main() {
     await mongoose.connect(dbUrl, {
@@ -39,12 +32,19 @@ async function main() {
         serverSelectionTimeoutMS: 10000,
     });
 }
+main()
+    .then(() => console.log("connected to DB"))
+    .catch((err) => console.log(err));
 
+// --------------------------------------
+// APP & EJS SETUP
+// --------------------------------------
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.engine("ejs", ejsMate);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 // --------------------------------------
@@ -74,25 +74,16 @@ const sessionOptions = {
     },
 };
 
-// --------------------------------------
-// FIRST define default currUser = null
-// This prevents EJS from crashing if passport hasn't run yet
-// --------------------------------------
-app.use((req, res, next) => {
-    res.locals.currUser = null;
-    next();
-});
-
 app.use(session(sessionOptions));
 app.use(flash());
 
 // --------------------------------------
-// PASSPORT MIDDLEWARE
+// PASSPORT CONFIG
 // --------------------------------------
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -102,10 +93,34 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user; // Now safe because default exists
+    res.locals.currUser = req.user || null;
     next();
 });
 
 // --------------------------------------
 // ROUTES
-// ------------------------------------
+// --------------------------------------
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
+
+// --------------------------------------
+// ERROR HANDLING
+// --------------------------------------
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page not found!"));
+});
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    const message = err.message || "Something went wrong!";
+    res.status(statusCode).render("error", { message });
+});
+
+// --------------------------------------
+// SERVER LISTEN (REQUIRED BY RENDER)
+// --------------------------------------
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+});
