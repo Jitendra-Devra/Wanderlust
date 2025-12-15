@@ -13,6 +13,7 @@ Check out the live application deployed on Render:
 * **Interactive Maps:** Integrated **Mapbox API** to visualize property locations on an interactive map.
 * **Form Validation:** Robust client-side and server-side validation to ensure secure and correct data entry for new listings.
 * **CRUD Operations:** Full Create, Read, Update, and Delete functionality for property management.
+* **Image Uploads:** Seamless image storage and management using Cloudinary.
 * **Responsive Design:** Optimized for mobile and desktop viewing using Bootstrap.
 
 ---
@@ -22,15 +23,19 @@ Check out the live application deployed on Render:
 **Frontend:**
 * HTML5, CSS3
 * JavaScript (ES6+)
-* ReactJS / EJS (Embedded JavaScript Templates)
+* EJS (Embedded JavaScript Templates)
 * Bootstrap 5
 
 **Backend:**
 * Node.js
 * Express.js
 
+**Database:**
+* MongoDB (via MongoDB Atlas)
+
 **Services & APIs:**
 * Mapbox API (Geocoding & Maps)
+* Cloudinary (Image Storage)
 * Render (Deployment)
 
 ---
@@ -56,6 +61,9 @@ Follow these steps to set up the project locally on your machine.
     PORT=8080
     MAPBOX_TOKEN=your_mapbox_public_token
     ATLASDB_URL=your_mongodb_connection_string
+    CLOUD_NAME=your_cloudinary_cloud_name
+    CLOUD_API_KEY=your_cloudinary_api_key
+    CLOUD_API_SECRET=your_cloudinary_api_secret
     SECRET=your_session_secret
     ```
 
@@ -72,13 +80,13 @@ Follow these steps to set up the project locally on your machine.
 ---
 
 ## 📸 Screenshots
-Home-Wanderlust (Image)
+Home-Wanderlust
 <img width="1900" height="871" alt="Image" src="https://github.com/user-attachments/assets/a57813f5-c995-41c8-b5d3-9fa5caac52f1" />
 
-Listing-Wanderlust (Image)
+Listing-Wanderlust
 <img width="1898" height="872" alt="Image" src="https://github.com/user-attachments/assets/f1771f98-a538-4334-b35d-54bbe11b77d0" />
 
-Edit-Listing-Wanderlust (Image)
+Edit-Listing-Wanderlust
 <img width="1915" height="869" alt="Image" src="https://github.com/user-attachments/assets/c577e496-61ff-4c74-b212-3c44fc8a26fe" />
 
 ---
