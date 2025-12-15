@@ -72,12 +72,13 @@ Follow these steps to set up the project locally on your machine.
 ---
 
 ## 📸 Screenshots
-Home-Wanderlust
+Home-Wanderlust (Image)
 <img width="1900" height="871" alt="Image" src="https://github.com/user-attachments/assets/a57813f5-c995-41c8-b5d3-9fa5caac52f1" />
 
-
+Listing-Wanderlust (Image)
 <img width="1898" height="872" alt="Image" src="https://github.com/user-attachments/assets/f1771f98-a538-4334-b35d-54bbe11b77d0" />
 
+Edit-Listing-Wanderlust (Image)
 <img width="1915" height="869" alt="Image" src="https://github.com/user-attachments/assets/c577e496-61ff-4c74-b212-3c44fc8a26fe" />
 
 ---
